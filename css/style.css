@@ -84,10 +84,13 @@ h1, h2, h3 {
     height: 60vh;
     color: #fff;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    
+    /* Add these for the slider */
+    position: relative; /* Crucial for positioning the overlay and content */
+    overflow: hidden;
 }
 
 .hero-content h2 {
@@ -246,3 +249,184 @@ h1, h2, h3 {
     margin-bottom: 15px;
 }
 
+.slider-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Sits behind the content */
+}
+
+.slider {
+    display: flex;
+    width: 600%; /* 100% for each of the 6 images */
+    height: 100%;
+    /* The animation magic! */
+    animation: slide 20s infinite linear; /* 30s total duration (5s per image) */
+}
+
+.slide {
+    width: 16.666%; /* 100% / 6 slides */
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* This is the dark layer over the images to make text readable */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2; /* Sits on top of slider, behind content */
+}
+
+/* We need to ensure the hero content is on top of everything */
+.hero-content {
+    position: relative; /* Or use position: absolute */
+    z-index: 3; /* Highest z-index to be on the very top */
+}
+
+/* The Keyframes Animation: moves the slider to the left */
+@keyframes slide {
+    0% {
+        transform: translateX(0%);
+    }
+    16% { /* Hold on image 1 */
+        transform: translateX(0%);
+    }
+    20% { /* Slide to image 2 */
+        transform: translateX(-16.666%);
+    }
+    36% { /* Hold on image 2 */
+        transform: translateX(-16.666%);
+    }
+    40% { /* Slide to image 3 */
+        transform: translateX(-33.332%);
+    }
+    56% { /* Hold on image 3 */
+        transform: translateX(-33.332%);
+    }
+    60% { /* Slide to image 4 */
+        transform: translateX(-49.998%);
+    }
+    76% { /* Hold on image 4 */
+        transform: translateX(-49.998%);
+    }
+    80% { /* Slide to image 5 */
+        transform: translateX(-66.664%);
+    }
+    96% { /* Hold on image 5 */
+        transform: translateX(-66.664%);
+    }
+    100% { /* Slide to image 6 (the animation loops back to 0%) */
+        transform: translateX(-83.330%);
+    }
+}
+
+/* --- History Page Timeline --- */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+/* The vertical line running down the timeline */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15px;
+    height: 100%;
+    width: 3px;
+    background-color: #002366; /* Navy Blue from theme */
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding-left: 50px;
+}
+
+/* The circle on the timeline */
+.timeline-dot {
+    position: absolute;
+    left: 15px;
+    top: 5px;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FFD700; /* Gold from theme */
+    border: 3px solid #002366;
+    z-index: 1;
+}
+
+.timeline-content h3 {
+    margin-bottom: 10px;
+    color: #002366;
+}
+
+.timeline-content p {
+    margin-bottom: 15px;
+}
+
+/* --- About Page --- */
+
+.mission-vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.mission-vision-grid .item {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-left: 5px solid #002366; /* Navy Blue */
+}
+
+.mission-vision-grid .item h3 {
+    color: #002366;
+    margin-bottom: 10px;
+}
+
+.capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.capability-item {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.capability-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.capability-item i {
+    font-size: 3rem;
+    color: #002366; /* Navy Blue */
+    margin-bottom: 15px;
+}
+
+.capability-item h3 {
+    margin-bottom: 10px;
+}
+
+/* Make mission/vision grid stack on smaller screens */
+@media (max-width: 768px) {
+    .mission-vision-grid {
+        grid-template-columns: 1fr;
+    }
+}
